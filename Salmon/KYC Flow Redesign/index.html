@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Salmon Bank | KYC Flow Redesign — Variant B</title>
+<link rel="icon" href="https://cdn.salmon.ph/m/logo_bank_93d24d99ec.svg" type="image/svg+xml">
+
+<style>
+@font-face {
+  font-family: 'Gilroy';
+  src: url('https://web.slmn.ph/fonts/Gilroy-Medium.woff') format('woff');
+  font-weight: 500; font-display: swap;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('https://web.slmn.ph/fonts/Gilroy-SemiBold.woff') format('woff');
+  font-weight: 600; font-display: swap;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('https://web.slmn.ph/fonts/Gilroy-Bold.woff') format('woff');
+  font-weight: 700; font-display: swap;
+}
+@font-face {
+  font-family: 'Gilroy';
+  src: url('https://web.slmn.ph/fonts/Gilroy-Black.woff') format('woff');
+  font-weight: 900; font-display: swap;
+}
+
+:root {
+  --salmon: #F05A5A;
+  --salmon-hover: #E85757;
+  --salmon-light: #f08385;
+  --salmon-soft: rgba(240, 90, 90, 0.1);
+  --cream: #F2F0EB;
+  --gray-text: #666666;
+  --gray-muted: #616161;
+  --gray-light: #F4F4F3;
+  --dark: #231F20;
+  --border: rgba(35, 31, 32, 0.12);
+  --white: #FFFFFF;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Gilroy', system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+  color: var(--dark);
+  background: var(--cream);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+header {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+}
+.header-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo { height: 28px; width: auto; }
+.brand-context {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Hero */
+.hero {
+  padding: 56px 32px 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+.eyebrow {
+  display: inline-block;
+  background: var(--salmon-soft);
+  color: var(--salmon);
+  font-weight: 700;
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-weight: 900;
+  font-size: 44px;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
+  color: var(--dark);
+}
+.hero h1 .accent { color: var(--salmon); }
+.hero .lede {
+  font-size: 18px;
+  color: var(--gray-text);
+  max-width: 720px;
+  margin: 0 auto 24px;
+}
+.callout-row {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.callout {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--dark);
+}
+.callout strong { color: var(--salmon); font-weight: 700; }
+
+/* Phone grid */
+.phones-section {
+  padding: 32px 24px 48px;
+  background: var(--cream);
+}
+.phones-inner {
+  max-width: 1500px;
+  margin: 0 auto;
+}
+.phones-row {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 1100px) {
+  .phones-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 720px) {
+  .phones-row {
+    grid-template-columns: 1fr;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+}
+
+.phone-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* iPhone frame — Figma-style skeleton */
+.iphone {
+  width: 260px;
+  height: 545px;
+  background: #1a1a1a;
+  border-radius: 38px;
+  padding: 9px;
+  position: relative;
+  box-shadow:
+    0 20px 50px rgba(35, 31, 32, 0.15),
+    0 0 0 1.5px rgba(255,255,255,0.08) inset;
+}
+.iphone-screen {
+  width: 100%;
+  height: 100%;
+  border-radius: 30px;
+  overflow: hidden;
+  position: relative;
+  background: var(--white);
+}
+/* Dynamic Island */
+.iphone::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 22px;
+  background: #000;
+  border-radius: 14px;
+  z-index: 30;
+}
+/* Side buttons */
+.iphone::after {
+  content: '';
+  position: absolute;
+  right: -2px;
+  top: 130px;
+  width: 3px;
+  height: 60px;
+  background: #1a1a1a;
+  border-radius: 0 2px 2px 0;
+}
+
+/* Progress bar overlay — sits at top of screen, below status bar area */
+.progress-overlay {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(4px);
+  border-bottom: 1px solid var(--border);
+}
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--dark);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 5px;
+}
+.progress-track {
+  width: 100%;
+  height: 4px;
+  background: var(--gray-light);
+  border-radius: 999px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--salmon), var(--salmon-light));
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* Screenshot inside */
+.screenshot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
+}
+
+/* Step caption (encouragement copy) */
+.step-caption {
+  margin-top: 18px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 16px;
+  max-width: 260px;
+  width: 100%;
+  text-align: center;
+}
+.step-caption .step-tag {
+  display: inline-block;
+  background: var(--salmon-soft);
+  color: var(--salmon);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+.step-caption .encouragement {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--dark);
+  line-height: 1.4;
+  font-style: italic;
+}
+
+/* Section divider */
+.divider {
+  max-width: 600px;
+  margin: 48px auto 0;
+  padding: 0 24px;
+  text-align: center;
+}
+.divider h2 {
+  font-weight: 800;
+  font-size: 24px;
+  color: var(--dark);
+  margin-bottom: 12px;
+}
+.divider p {
+  font-size: 15px;
+  color: var(--gray-text);
+}
+
+/* Comparison row */
+.comparison-section {
+  padding: 56px 32px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+}
+.comparison-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  margin-top: 40px;
+}
+@media (max-width: 720px) {
+  .comparison-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+.comparison-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.comparison-label {
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 20px;
+}
+.label-a {
+  background: var(--gray-light);
+  color: var(--gray-muted);
+}
+.label-b {
+  background: var(--salmon-soft);
+  color: var(--salmon);
+}
+.comparison-note {
+  margin-top: 14px;
+  font-size: 14px;
+  color: var(--gray-text);
+  text-align: center;
+  max-width: 280px;
+}
+
+/* Hypothesis card */
+.hypothesis-section {
+  padding: 56px 32px;
+  background: var(--cream);
+  border-top: 1px solid var(--border);
+}
+.hypothesis-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.hypothesis-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+}
+@media (max-width: 720px) {
+  .hypothesis-card { grid-template-columns: 1fr; }
+}
+.hypothesis-block h3 {
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--salmon);
+  margin-bottom: 10px;
+}
+.hypothesis-block p {
+  font-size: 16px;
+  color: var(--dark);
+  line-height: 1.6;
+}
+.hypothesis-block strong { font-weight: 700; }
+
+.numbers-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+@media (max-width: 720px) {
+  .numbers-row { grid-template-columns: repeat(2, 1fr); }
+}
+.number-pill {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  text-align: center;
+}
+.number-big {
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--salmon);
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+}
+.number-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Footer */
+footer {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 32px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--gray-muted);
+}
+
+@media (max-width: 720px) {
+  .hero h1 { font-size: 32px; }
+  .hero .lede { font-size: 16px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="https://salmon.ph"><img src="https://cdn.salmon.ph/m/logo_bank_93d24d99ec.svg" alt="Salmon Bank" class="logo"></a>
+  </div>
+</header>
+
+<section class="hero">
+  <h1>KYC flow with a <span class="accent">progress bar</span> and step encouragement.</h1>
+</section>
+
+<section class="phones-section">
+  <div class="phones-inner">
+    <div class="phones-row">
+
+      <!-- Step 2 -->
+      <div class="phone-block">
+        <div class="iphone">
+          <div class="iphone-screen">
+            <div class="progress-overlay">
+              <div class="progress-label">
+                <span>Step 2 of 6</span>
+                <span>33%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 33%;"></div>
+              </div>
+            </div>
+            <img src="screenshots/02-permanent-address.png" alt="Permanent address" class="screenshot">
+          </div>
+        </div>
+        <div class="step-caption">
+          <span class="step-tag">Step 2 of 6</span>
+          <div class="encouragement">"You're a few steps away from using Salmon."</div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="phone-block">
+        <div class="iphone">
+          <div class="iphone-screen">
+            <div class="progress-overlay">
+              <div class="progress-label">
+                <span>Step 3 of 6</span>
+                <span>50%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 50%;"></div>
+              </div>
+            </div>
+            <img src="screenshots/03-employment.png" alt="Employment details" class="screenshot">
+          </div>
+        </div>
+        <div class="step-caption">
+          <span class="step-tag">Step 3 of 6</span>
+          <div class="encouragement">"You're halfway there. About 3 minutes to go."</div>
+        </div>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="phone-block">
+        <div class="iphone">
+          <div class="iphone-screen">
+            <div class="progress-overlay">
+              <div class="progress-label">
+                <span>Step 4 of 6</span>
+                <span>67%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 67%;"></div>
+              </div>
+            </div>
+            <img src="screenshots/04-face-scan.png" alt="Face scan" class="screenshot">
+          </div>
+        </div>
+        <div class="step-caption">
+          <span class="step-tag">Step 4 of 6</span>
+          <div class="encouragement">"Quick face scan — takes about 30 seconds."</div>
+        </div>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="phone-block">
+        <div class="iphone">
+          <div class="iphone-screen">
+            <div class="progress-overlay">
+              <div class="progress-label">
+                <span>Step 5 of 6</span>
+                <span>83%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 83%;"></div>
+              </div>
+            </div>
+            <img src="screenshots/05-id-verification.png" alt="ID verification" class="screenshot">
+          </div>
+        </div>
+        <div class="step-caption">
+          <span class="step-tag">Step 5 of 6</span>
+          <div class="encouragement">"Almost done. One more step to verify your identity."</div>
+        </div>
+      </div>
+
+      <!-- Step 6 -->
+      <div class="phone-block">
+        <div class="iphone">
+          <div class="iphone-screen">
+            <div class="progress-overlay">
+              <div class="progress-label">
+                <span>Step 6 of 6</span>
+                <span>100%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 100%;"></div>
+              </div>
+            </div>
+            <img src="screenshots/06-review-id.png" alt="Review ID information" class="screenshot">
+          </div>
+        </div>
+        <div class="step-caption">
+          <span class="step-tag">Step 6 of 6</span>
+          <div class="encouragement">"Last step — review and you're in."</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="comparison-section">
+  <div class="comparison-inner">
+    <div class="divider" style="margin-top: 0;">
+      <h2>What changes vs the current flow</h2>
+      <p>Same fields, same backend, same eligibility logic. Only the wrapper UX is different.</p>
+    </div>
+
+    <div class="comparison-grid">
+
+      <div class="comparison-col">
+        <span class="comparison-label label-a">Variant A — Current</span>
+        <div class="iphone" style="width: 240px; height: 500px;">
+          <div class="iphone-screen">
+            <img src="screenshots/05-id-verification.png" alt="Variant A ID verification" class="screenshot">
+          </div>
+        </div>
+        <p class="comparison-note">No progress indicator. Users don't know how many steps remain or how long it will take.</p>
+      </div>
+
+      <div class="comparison-col">
+        <span class="comparison-label label-b">Variant B — Tested</span>
+        <div class="iphone" style="width: 240px; height: 500px;">
+          <div class="iphone-screen">
+            <div class="progress-overlay">
+              <div class="progress-label">
+                <span>Step 5 of 6</span>
+                <span>83%</span>
+              </div>
+              <div class="progress-track">
+                <div class="progress-fill" style="width: 83%;"></div>
+              </div>
+            </div>
+            <img src="screenshots/05-id-verification.png" alt="Variant B ID verification" class="screenshot">
+          </div>
+        </div>
+        <p class="comparison-note">Progress bar + step counter + encouragement text. Users see where they are and what's left.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+</body>
+</html>
